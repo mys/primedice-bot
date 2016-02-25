@@ -1,0 +1,26 @@
+{
+  "name": "primedice",
+  "description": "",
+  "main": "app.js",
+  "license": "ISC",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.4.9",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.0",
+    "angular-route": "^1.4.9",
+    "angular-socket-io": "^0.7.0",
+    "socket.io-client": "^1.4.5",
+    "angular-material-data-table": "^0.9.10"
+  }
+}

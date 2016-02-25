@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>MALINKA-MC</title>
+
+	<!-- Angular Material style sheet -->
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.3/angular-material.min.css">
+	<link rel="stylesheet" href="/bower_components/angular-material-data-table/dist/md-data-table.min.css" />
+	<link rel="stylesheet" href="css/site.css">
+</head>
+
+<body ng-app="malinkaApp" ng-controller="malinkaController" ng-cloak>
+
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<span>MALINKA-MC</span>
+		</div>
+	</md-toolbar>
+
+	<md-content>
+		<md-card class="md-padding">
+			<span>CPU: {{cpu}}%</span>
+		</md-card>
+	</md-content>
+
+	<md-content layout="row">
+		<md-card>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">bot</span>
+					<span class="md-subhead">log.txt</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-table-container>
+					<table md-table>
+						<thead md-head>
+							<tr md-row>
+								<th md-column>Date</th>
+								<th md-column>Streak</th>
+								<th md-column>Profit</th>
+								<th md-column>Bet</th>
+								<th md-column>Balance</th>
+							</tr>
+						</thead>
+						<tbody md-body>
+							<tr md-row ng-repeat="row in tail" class="animate">
+								<td md-cell>{{ row.date }}</td>
+								<td md-cell>{{ row.streak }}</td>
+								<td md-cell>{{ row.profit }}</td>
+								<td md-cell>{{ row.bet }}</td>
+								<td md-cell>{{ row.balance }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+			</md-card-content>
+		</md-card>
+
+		<md-card>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">bot1</span>
+					<span class="md-subhead">log1.txt</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-table-container>
+					<table md-table>
+						<thead md-head>
+							<tr md-row>
+								<th md-column>Date</th>
+								<th md-column>Streak</th>
+								<th md-column>Profit</th>
+								<th md-column>Bet</th>
+								<th md-column>Balance</th>
+							</tr>
+						</thead>
+						<tbody md-body>
+							<tr md-row ng-repeat="row in tail1" class="animate">
+								<td md-cell>{{ row.date }}</td>
+								<td md-cell>{{ row.streak }}</td>
+								<td md-cell>{{ row.profit }}</td>
+								<td md-cell>{{ row.bet }}</td>
+								<td md-cell>{{ row.balance }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+			</md-card-content>
+		</md-card>
+	</md-content>
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+	<!-- Angular core components -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script src="/bower_components/angular-route/angular-route.js"></script>
+	<script src="/bower_components/angular-socket-io/socket.js"></script>
+
+	<!-- Angular Material Dependencies -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+
+	<!-- Angular Material Data Table -->
+	<script src="/bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
+
+	<!-- Angular Material Library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.3/angular-material.min.js"></script>
+
+	<!-- Initialize Angular App -->
+	<script src="js/app.js"></script>
+	<script src="js/services.js"></script>
+
+	<!--  Angular Controllers -->
+
+</body>
+
+</html>
