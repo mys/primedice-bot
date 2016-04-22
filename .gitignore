@@ -1,0 +1,16 @@
+# tor cache
+tor.90*
+
+# databases
+*.db
+*.sqlite
+
+# configuration
+config.py
+
+# www
+www
+
+# others
+*.pyc
+*.txt
