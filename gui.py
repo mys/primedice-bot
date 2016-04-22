@@ -115,8 +115,8 @@ while True:
 		if line.isspace():
 			continue
 		
-		if not line.startswith("{u"):
-			if line.startswith("{"):
+		if not line.startswith('{"u'):
+			if line.startswith('{"date"'):
 				print line
 				current_date = json.loads(line)['date']
 				current_bet_size = json.loads(line)['bet']
