@@ -15,6 +15,9 @@ class CaptchaException(Exception):
 class TooManyRequestsException(Exception):
 	pass
 	
+class BadGatewayException(Exception):
+	pass
+	
 class AnswerNoneException(Exception):
 	pass
 
@@ -33,13 +36,25 @@ class primedice():
 		}
 		self.session = requests.Session()
 		self.bet_count = 0
+		self.tor = False
 		logging.getLogger("requests").setLevel(logging.WARNING)
 		logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 	# -------------------------------------------------------------------------
 	# setProxy
 	# -------------------------------------------------------------------------
-	def setProxy(self, port):
+	def setProxy(self, host, port):
+		int_port = int(port)
+		socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, host, int_port)
+		socket.socket = socks.socksocket
+		self.port = port
+		print 'ipify: ', self.session_get('https://api.ipify.org').content 
+
+	# -------------------------------------------------------------------------
+	# setTor proxy
+	# -------------------------------------------------------------------------
+	def setTor(self, port):
+		self.tor = True
 		int_port = int(port)
 		socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, '127.0.0.1', int_port)
 		socket.socket = socks.socksocket
@@ -50,12 +65,13 @@ class primedice():
 	# restartTor
 	# -------------------------------------------------------------------------
 	def restartTor(self):
-		os.system('pkill -9 -f torrc.' + self.port)
-		time.sleep(1)
-		os.system('tor -f /etc/tor/torrc.' + self.port + ' &')
-		time.sleep(30)
-		#self.session.get('https://api.ipify.org').content
-		print 'ipify: ', self.session_get('https://api.ipify.org').content 
+		if self.tor:
+			os.system('pkill -9 -f torrc.' + self.port)
+			time.sleep(1)
+			os.system('tor -f /etc/tor/torrc.' + self.port + ' &')
+			time.sleep(30)
+			#self.session.get('https://api.ipify.org').content
+			print 'ipify: ', self.session_get('https://api.ipify.org').content 
 
 	# -------------------------------------------------------------------------
 	# session_get
@@ -77,15 +93,18 @@ class primedice():
 	def session_post(self, url, post):
 		answer = self.session.post(url, data = post, headers = self.headers, \
 			timeout = 30)
-		if not answer:
-			print answer
-			print answer.content
-			raise AnswerNoneException
 		if answer.status_code == 403:
 			raise CaptchaException
 		if answer.status_code == 429:
 			raise TooManyRequestsException
+		if answer.status_code == 502:
+			raise BadGatewayException
 		else:
+			if not answer:
+				print answer
+				print answer.content
+				print answer.status_code
+				raise AnswerNoneException
 			return answer
 
 	# -------------------------------------------------------------------------
@@ -101,6 +120,7 @@ class primedice():
 			'opt':''
 		}
 		
+		
 		try:
 			if not token:
 				login_response = self.session_post(self.login_url, post_data).content
@@ -109,7 +129,9 @@ class primedice():
 			self.seed_url_params = self.seed_url + "?access_token=" + self.token
 			self.info_url_params = self.info_url + "?access_token=" + self.token
 		
-			answer = self.session.get(self.info_url_params, timeout = 30)
+			answer = self.session.get(self.info_url_params)
+			print answer
+			print answer.content
 			if answer.status_code == 403:
 				raise CaptchaException
 					
@@ -119,7 +141,8 @@ class primedice():
 		except CaptchaException:
 			print 'Attention required(get): CAPTCHA'
 			return False
-		except Exception:
+		except Exception,e:
+			print e
 			if login_response == "Unauthorized":
 				sys.exit("Wrong login details")
 			elif login_response == "Too many requests.":
