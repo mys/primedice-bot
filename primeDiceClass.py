@@ -29,7 +29,6 @@ class primedice():
 	def __init__(self):
 		self.login_url = 'https://api.primedice.com/api/login'
 		self.bet_url = 'https://api.primedice.com/api/bet'
-		self.withdraw_url = 'https://api.primedice.com/api/'
 		self.seed_url = 'https://api.primedice.com/api/seed'
 		self.info_url = 'https://api.primedice.com/api/users/1'
 		self.headers = {
@@ -93,7 +92,7 @@ class primedice():
 	# -------------------------------------------------------------------------
 	def session_post(self, url, post):
 		answer = self.session.post(url, data = post, headers = self.headers, \
-			timeout = 4)
+			timeout = 30)
 		if answer.status_code == 403:
 			raise CaptchaException
 		if answer.status_code == 429:
@@ -169,7 +168,7 @@ class primedice():
 			logging.error("Error while resetting seed")
 			logging.error(answer)
 			logging.error(answer.content)
-	# Withdraw api call
+	# Withdraw 
 	# -------------------------------------------------------------------------
 	def withdraw(self, amount  , address ):
 		
@@ -181,8 +180,8 @@ class primedice():
 				'address': str(address)
 			}
 			answer = self.session_post(self.withdraw_url + "withdraw?access_token=" + self.token , post = post_data)
+	# -------------------------------------------------------------------------
 	# bet
-	
 	# -------------------------------------------------------------------------
 	def bet(self, amount = 0, target = 95, condition = "<"):
 		try:
@@ -233,4 +232,5 @@ class primedice():
 			else:
 				logging.error("!Error %s:" % (answer.status_code))
 				logging.error(answer)
-    
+				logging.error(answer.content)
+				
