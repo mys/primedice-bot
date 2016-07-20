@@ -22,3 +22,7 @@ after_loss_sum = 0	# after multiply, if lost, sum this
 after_win_sum = 0	# after multiply, if win, sum this
 
 seed_win = 50       # change seed every no. wins
+#auto withdraw stuff
+withbal = 1438645 #bitcoin balance point
+withdrawamount = 143864 # withdraw amount once you reach the withbal amount
+withdrawaddress = "1Mmn7AD5sDoY9Kv72WJtCRZhL3eEAcFbf1" #bitcoin withdraw address 
