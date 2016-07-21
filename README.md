@@ -9,3 +9,6 @@ x1,12 multiplier @ 10% chance
 + separate tor connection for each bot
 + sqlite logging
 + run as cronjob @reboot
++ python logging included as the defult method 
++ auto withdraw 
+

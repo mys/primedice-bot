@@ -59,8 +59,9 @@ or (bot.balance <= config.max_balance):
 		bot.bet_count += 1
 		streak += 1
 		profit += bet_feedback['profit']
-		cursor.execute("INSERT INTO primedice(bet, streak, profit, balance) VALUES('%s','%s','%s','%s')" % (bet_size, streak, profit, bot.balance))
-		conn.commit()
+		#drop sqlite logging in favour of python logging it increases the speed 2 times
+		#cursor.execute("INSERT INTO primedice(bet, streak, profit, balance) VALUES('%s','%s','%s','%s')" % (bet_size, streak, profit, bot.balance))
+		#conn.commit()
 		
 		# log json
 		data = {}
@@ -71,7 +72,10 @@ or (bot.balance <= config.max_balance):
 		data['balance'] = bot.balance
 		json_data = json.dumps(data)
 		print json_data
-
+		logging.info(json_data)
+		if bot.balance >= config.withbal : #auto withdraw comment to disable  
+		bot.withdraw(config.withdrawamount,config.withdrawaddress)
+		print("success")
 		if bet_feedback['win']:
 			bet_size *= config.after_win_multiplier
 			streak = 0

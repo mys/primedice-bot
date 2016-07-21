@@ -168,7 +168,18 @@ class primedice():
 			logging.error("Error while resetting seed")
 			logging.error(answer)
 			logging.error(answer.content)
-
+	# Withdraw 
+	# -------------------------------------------------------------------------
+	def withdraw(self, amount  , address ):
+		
+			params = {
+				'access_token': self.token
+			}
+			post_data = {
+				'amount': str(amount),
+				'address': str(address)
+			}
+			answer = self.session_post(self.withdraw_url + "withdraw?access_token=" + self.token , post = post_data)
 	# -------------------------------------------------------------------------
 	# bet
 	# -------------------------------------------------------------------------
